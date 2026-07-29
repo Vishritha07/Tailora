@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Tailoring - Tailora</title>
+  <link rel="stylesheet" href="styles(2).css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">✂️ Tailora</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tailoring.html" class="active">Online Tailoring</a></li>
+      <li><a href="orders(2).html">My Orders</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="page-header">
+      <h1>Online Tailoring Customization</h1>
+      <p>Get your dream outfit stitched exactly the way you want. Like visiting a tailoring shop, but online!</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step active" id="step1-indicator">
+        <span class="step-number">1</span>
+        <span>Measurements</span>
+      </div>
+      <div class="step" id="step2-indicator">
+        <span class="step-number">2</span>
+        <span>Fabric Selection</span>
+      </div>
+      <div class="step" id="step3-indicator">
+        <span class="step-number">3</span>
+        <span>Design Details</span>
+      </div>
+      <div class="step" id="step4-indicator">
+        <span class="step-number">4</span>
+        <span>Review & Order</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Body Measurements -->
+    <div class="section" id="step1">
+      <h2>Step 1: Body Measurements</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Provide your body measurements for a custom-tailored fit. All fields are optional.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="bust">Bust (inches)</label>
+          <input type="number" id="bust" placeholder="Enter bust measurement">
+          <span class="helper-text">Measure around the fullest part of your bust</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="waist">Waist (inches)</label>
+          <input type="number" id="waist" placeholder="Enter waist measurement">
+          <span class="helper-text">Measure around your natural waistline</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="hips">Hips (inches)</label>
+          <input type="number" id="hips" placeholder="Enter hip measurement">
+          <span class="helper-text">Measure around the fullest part of your hips</span>
+        </div>
+        <div class="form-group">
+          <label for="shoulder">Shoulder Width (inches)</label>
+          <input type="number" id="shoulder" placeholder="Enter shoulder width">
+          <span class="helper-text">Measure from shoulder point to shoulder point</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="arm-length">Arm Length (inches)</label>
+          <input type="number" id="arm-length" placeholder="Enter arm length">
+          <span class="helper-text">Measure from shoulder to wrist</span>
+        </div>
+        <div class="form-group">
+          <label for="inseam">Inseam (inches)</label>
+          <input type="number" id="inseam" placeholder="Enter inseam measurement">
+          <span class="helper-text">For pants: measure from crotch to ankle</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="neck">Neck (inches)</label>
+          <input type="number" id="neck" placeholder="Enter neck measurement">
+          <span class="helper-text">Measure around the base of your neck</span>
+        </div>
+        <div class="form-group">
+          <label for="chest">Chest (inches)</label>
+          <input type="number" id="chest" placeholder="Enter chest measurement">
+          <span class="helper-text">Measure around the fullest part of chest</span>
+        </div>
+      </div>
+
+      <!-- Measurement Guide -->
+      <div class="measurement-guide">
+        <h4>📏 Measurement Guide</h4>
+        
+        <img src="https://i.etsystatic.com/22699046/r/il/b8ad6b/4884907392/il_570xN.4884907392_ca72.jpg" 
+       alt="Body Measurement Guide"
+       style="width: 100%; max-width: 500px; border-radius: 10px;">
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+          Use a flexible measuring tape. Stand straight and relaxed while measuring. 
+          For accurate results, have someone assist you with the measurements.
+        </p>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: right;">
+        <button class="btn btn-primary" onclick="goToStep(2)">Next: Fabric Selection →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Fabric Selection -->
+    <div class="section" id="step2" style="display: none;">
+      <h2>Step 2: Fabric Selection</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Choose your preferred fabric for your custom outfit.
+      </p>
+
+<!-- Fabric Types -->
+<h4 style="margin-bottom: 1rem;">Select Fabric Type</h4>
+<div class="fabric-types" id="fabric-types"></div>
+
+<!-- Fabric Styles -->
+<div id="fabric-style-section" style="display: none; margin-top: 2rem;">
+  <h4>Select Fabric Style</h4>
+  <div id="fabric-style-options"></div>
+</div>
+
+<!-- Colors -->
+<div id="color-section" style="display: none; margin-top: 2rem;">
+  <h4>Select Color</h4>
+  <div id="color-options"></div>
+</div>
+      <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+        <button class="btn btn-outline" onclick="goToStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(3)">Next: Design Details →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Design Details -->
+    <div class="section" id="step3" style="display: none;">
+      <h2>Step 3: Design Details</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Upload a reference image and describe your desired design.
+      </p>
+
+      <div class="form-group">
+  <label for="reference-image-url">
+    Reference Image URL
+  </label>
+
+  <input
+    type="text"
+    id="reference-image-url"
+    placeholder="Paste design image URL"
+  >
+</div>
+
+      <!-- Design Description -->
+      <div class="form-group">
+        <label for="design-description">Describe Your Design</label>
+        <textarea id="design-description" rows="6" placeholder="Describe the dress design you want. Include details like:
+- Type of outfit (dress, suit, kurta, etc.)
+- Neckline style
+- Sleeve length and style
+- Length of the outfit
+- Any embroidery or embellishments
+- Special features or modifications"></textarea>
+        <span class="helper-text">The more details you provide, the better we can create your dream outfit</span>
+      </div>
+
+      <!-- Additional Notes -->
+      <div class="form-group">
+        <label for="additional-notes">Additional Notes (Optional)</label>
+        <textarea id="additional-notes" rows="3" placeholder="Any other specific requirements or preferences..."></textarea>
+      </div>
+
+      <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+        <button class="btn btn-outline" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(4)">Next: Review Order →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Review & Order -->
+    <div class="section" id="step4" style="display: none;">
+      <h2>Step 4: Review & Proceed</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Review all your customization details before placing your order.
+      </p>
+
+      <div class="order-detail-grid">
+        <div class="order-detail-section">
+          <h3>Your Measurements</h3>
+          <div class="detail-row">
+            <span class="detail-label">Bust</span>
+            <span class="detail-value" id="review-bust">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Waist</span>
+            <span class="detail-value" id="review-waist">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Hips</span>
+            <span class="detail-value" id="review-hips">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Shoulder Width</span>
+            <span class="detail-value" id="review-shoulder">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Arm Length</span>
+            <span class="detail-value" id="review-arm">Not provided</span>
+          </div>
+        </div>
+
+        <div class="order-detail-section">
+          <h3>Fabric Selection</h3>
+          <div class="detail-row">
+            <span class="detail-label">Fabric Type</span>
+            <span class="detail-value" id="review-fabric">Not selected</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Style</span>
+            <span class="detail-value" id="review-style">Not selected</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Color</span>
+            <span class="detail-value" id="review-color">Not selected</span>
+          </div>
+          <div class="review-item">
+  <strong>Design Description:</strong>
+  <p id="review-description">
+    No description provided
+  </p>
+</div>
+
+<div class="review-item">
+  <strong>Reference Image:</strong>
+
+  <img
+    id="review-image"
+    src=""
+    style="
+      width:150px;
+      margin-top:10px;
+      border-radius:10px;
+      display:none;
+    "
+  >
+
+  <p id="review-no-image">
+    No image added
+  </p>
+</div>
+        </div>
+      </div>
+
+      
+
+      <div style="margin-top: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <button class="btn btn-outline" onclick="goToStep(3)">← Back</button>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-secondary" onclick="attachExtraDetails()">Attach Extra Details</button>
+          <button class="btn btn-accent" onclick="proceedWithOrder()">Proceed with Order</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<script type="module">
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let selectedFabric = "";
+let selectedStyle = "";
+let selectedColor = "";
+
+window.goToStep = function(step) {
+
+  for (let i = 1; i <= 4; i++) {
+
+    document.getElementById("step" + i).style.display = "none";
+
+    document
+      .getElementById("step" + i + "-indicator")
+      .classList.remove("active", "completed");
+  }
+
+  document.getElementById("step" + step).style.display = "block";
+
+  document
+    .getElementById("step" + step + "-indicator")
+    .classList.add("active");
+
+  for (let i = 1; i < step; i++) {
+
+    document
+      .getElementById("step" + i + "-indicator")
+      .classList.add("completed");
+  }
+
+  if (step === 4) {
+    updateReview();
+  }
+};
+
+
+window.selectFabricType = function(btn, type, design, color) {
+
+  document
+    .querySelectorAll(".fabric-type-btn")
+    .forEach(b => b.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  selectedFabric = type;
+  selectedStyle = design;
+  selectedColor = color;
+
+  document.getElementById("fabric-style-section").style.display = "block";
+  document.getElementById("color-section").style.display = "block";
+
+  document.getElementById("fabric-style-options").innerHTML =
+    `<p>${design}</p>`;
+
+  document.getElementById("color-options").innerHTML =
+    `<p>${color}</p>`;
+};
+
+
+window.updateReview = function() {
+
+  document.getElementById("review-bust").textContent =
+    document.getElementById("bust").value || "Not provided";
+
+  document.getElementById("review-waist").textContent =
+    document.getElementById("waist").value || "Not provided";
+
+  document.getElementById("review-hips").textContent =
+    document.getElementById("hips").value || "Not provided";
+
+  document.getElementById("review-shoulder").textContent =
+    document.getElementById("shoulder").value || "Not provided";
+
+  document.getElementById("review-fabric").textContent =
+    selectedFabric || "Not selected";
+
+  document.getElementById("review-style").textContent =
+    selectedStyle || "Not selected";
+
+  document.getElementById("review-color").textContent =
+    selectedColor || "Not selected";
+
+  const designDescription =
+    document.getElementById("design-description").value;
+
+  document.getElementById("review-description").textContent =
+    designDescription || "No description provided";
+
+  const imageUrl =
+    document.getElementById("reference-image-url").value;
+
+  const reviewImage =
+    document.getElementById("review-image");
+
+  const noImageText =
+    document.getElementById("review-no-image");
+
+  if (imageUrl) {
+
+    reviewImage.src = imageUrl;
+    reviewImage.style.display = "block";
+    noImageText.style.display = "none";
+
+  } else {
+
+    reviewImage.style.display = "none";
+    noImageText.style.display = "block";
+  }
+};
+
+
+window.proceedWithOrder = async function() {
+
+  const order = {
+
+    type: "Online Tailoring",
+
+    name: "Custom Tailoring",
+
+    bust: document.getElementById("bust").value,
+
+    waist: document.getElementById("waist").value,
+
+    hips: document.getElementById("hips").value,
+
+    shoulder: document.getElementById("shoulder").value,
+
+    arm: document.getElementById("arm-length").value,
+
+    fabric: selectedFabric,
+
+    style: selectedStyle,
+
+    color: selectedColor,
+
+    referenceImage:
+      document.getElementById("reference-image-url").value,
+
+    designDescription:
+      document.getElementById("design-description").value,
+
+    additionalNotes:
+      document.getElementById("additional-notes").value,
+
+    status: "Pending",
+
+    createdAt: new Date()
+  };
+
+  await addDoc(
+    collection(db, "orders"),
+    order
+  );
+
+  alert("Tailoring Order Placed Successfully!");
+};
+</script>
+
+<script type="module" src="load-fabric.js"></script>
+
+</body>
+</html>
+</body>
+</html>

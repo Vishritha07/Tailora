@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Status Management - Tailora Admin</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>✂️ <span>Tailora</span></h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item">
+            <span class="icon">👗</span>
+            <span>Products</span>
+          </a>
+          <a href="fabrics.html" class="nav-item">
+            <span class="icon">🧵</span>
+            <span>Fabrics</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Orders</div>
+          <a href="orders.html" class="nav-item">
+            <span class="icon">📦</span>
+            <span>All Orders</span>
+          </a>
+          <a href="status.html" class="nav-item active">
+            <span class="icon">🔄</span>
+            <span>Order Status</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="top-header">
+        <div class="page-title">
+          <h1>Order Status Management</h1>
+          <p>Update and track order progress</p>
+        </div>
+      </div>
+
+      <!-- Status Overview -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">📋</div>
+          <div class="stat-info">
+            <h3>3</h3>
+            <p>Order Placed</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-info">
+            <h3>2</h3>
+            <p>Accepted</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">🧵</div>
+          <div class="stat-info">
+            <h3>4</h3>
+            <p>Stitching</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">📦</div>
+          <div class="stat-info">
+            <h3>5</h3>
+            <p>Shipped</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Status Update -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Update Order Status</h3>
+          <div style="display: flex; gap: 1rem;">
+            <select id="filter-status" style="padding: 0.5rem 1rem; border: 2px solid var(--border); border-radius: 8px;" onchange="filterOrders()">
+              <option value="">All Orders</option>
+              <option value="placed">Order Placed</option>
+              <option value="accepted">Order Accepted</option>
+              <option value="stitching-started">Stitching Started</option>
+              <option value="stitching-completed">Stitching Completed</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivery-soon">2 Days Left</option>
+              <option value="delivered">Delivered</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Product</th>
+                  <th>Current Status</th>
+                  <th>Update Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#TS-2026-001</td>
+                  <td>Sarah Johnson</td>
+                  <td>Elegant Evening Gown</td>
+                  <td><span class="badge badge-stitching">Stitching Started</span></td>
+                  <td>
+                    <select class="status-select" id="status-1">
+                      <option value="placed">Order Placed</option>
+                      <option value="accepted">Order Accepted</option>
+                      <option value="stitching-started" selected>Stitching Started</option>
+                      <option value="stitching-completed">Stitching Completed</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivery-soon">2 Days Left for Delivery</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-success" onclick="updateStatus(1)">Update</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#TS-2026-002</td>
+                  <td>John Smith</td>
+                  <td>Classic Formal Suit</td>
+                  <td><span class="badge badge-shipped">Shipped</span></td>
+                  <td>
+                    <select class="status-select" id="status-2">
+                      <option value="placed">Order Placed</option>
+                      <option value="accepted">Order Accepted</option>
+                      <option value="stitching-started">Stitching Started</option>
+                      <option value="stitching-completed">Stitching Completed</option>
+                      <option value="shipped" selected>Shipped</option>
+                      <option value="delivery-soon">2 Days Left for Delivery</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-success" onclick="updateStatus(2)">Update</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#TS-2026-003</td>
+                  <td>Priya M.</td>
+                  <td>Custom Kurta</td>
+                  <td><span class="badge badge-completed">Stitching Completed</span></td>
+                  <td>
+                    <select class="status-select" id="status-3">
+                      <option value="placed">Order Placed</option>
+                      <option value="accepted">Order Accepted</option>
+                      <option value="stitching-started">Stitching Started</option>
+                      <option value="stitching-completed" selected>Stitching Completed</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivery-soon">2 Days Left for Delivery</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-success" onclick="updateStatus(3)">Update</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#TS-2026-004</td>
+                  <td>Emily Chen</td>
+                  <td>Wedding Lehenga</td>
+                  <td><span class="badge badge-delivered">Delivered</span></td>
+                  <td>
+                    <select class="status-select" id="status-4" disabled>
+                      <option value="delivered" selected>Delivered</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-outline" disabled>Completed</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#TS-2026-005</td>
+                  <td>Michael K.</td>
+                  <td>Formal Blazer</td>
+                  <td><span class="badge badge-placed">Order Placed</span></td>
+                  <td>
+                    <select class="status-select" id="status-5">
+                      <option value="placed" selected>Order Placed</option>
+                      <option value="accepted">Order Accepted</option>
+                      <option value="stitching-started">Stitching Started</option>
+                      <option value="stitching-completed">Stitching Completed</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivery-soon">2 Days Left for Delivery</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-success" onclick="updateStatus(5)">Update</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#TS-2026-006</td>
+                  <td>Lisa R.</td>
+                  <td>Summer Dress</td>
+                  <td><span class="badge badge-accepted">Order Accepted</span></td>
+                  <td>
+                    <select class="status-select" id="status-6">
+                      <option value="placed">Order Placed</option>
+                      <option value="accepted" selected>Order Accepted</option>
+                      <option value="stitching-started">Stitching Started</option>
+                      <option value="stitching-completed">Stitching Completed</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivery-soon">2 Days Left for Delivery</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-success" onclick="updateStatus(6)">Update</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Legend -->
+      <div class="card" style="margin-top: 1.5rem;">
+        <div class="card-header">
+          <h3>Status Workflow</h3>
+        </div>
+        <div class="card-body">
+          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="badge badge-placed">Order Placed</span>
+              <span>→</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="badge badge-accepted">Order Accepted</span>
+              <span>→</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="badge badge-stitching">Stitching Started</span>
+              <span>→</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="badge badge-completed">Stitching Completed</span>
+              <span>→</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="badge badge-shipped">Shipped</span>
+              <span>→</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="background-color: #fef3e2; color: #f39c12; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">2 Days Left</span>
+              <span>→</span>
+            </div>
+            <div>
+              <span class="badge badge-delivered">Delivered</span>
+            </div>
+          </div>
+          <p style="margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+            <strong>Note:</strong> Status updates will be visible to customers in their "My Orders" section. 
+            Make sure to update the status accurately to keep customers informed about their order progress.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bulk Actions -->
+      <div class="card" style="margin-top: 1.5rem;">
+        <div class="card-header">
+          <h3>Bulk Status Update</h3>
+        </div>
+        <div class="card-body">
+          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <div class="form-group" style="margin-bottom: 0; flex: 1; min-width: 200px;">
+              <label style="margin-bottom: 0.25rem;">Select Orders</label>
+              <select multiple style="padding: 0.5rem; border: 2px solid var(--border); border-radius: 8px; height: 100px; width: 100%;">
+                <option value="1">#TS-2026-001 - Sarah Johnson</option>
+                <option value="2">#TS-2026-002 - John Smith</option>
+                <option value="3">#TS-2026-003 - Priya M.</option>
+                <option value="5">#TS-2026-005 - Michael K.</option>
+                <option value="6">#TS-2026-006 - Lisa R.</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="margin-bottom: 0.25rem;">New Status</label>
+              <select style="padding: 0.75rem 1rem; border: 2px solid var(--border); border-radius: 8px;">
+                <option value="">Select status</option>
+                <option value="accepted">Order Accepted</option>
+                <option value="stitching-started">Stitching Started</option>
+                <option value="stitching-completed">Stitching Completed</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivery-soon">2 Days Left for Delivery</option>
+                <option value="delivered">Delivered</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="bulkUpdate()" style="align-self: flex-end;">
+              Update Selected
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function updateStatus(orderId) {
+      const status = document.getElementById('status-' + orderId).value;
+      alert(`Status update for Order #${orderId} to "${status}" will be available after backend integration.`);
+    }
+
+    function bulkUpdate() {
+      alert('Bulk status update functionality will be available after backend integration.');
+    }
+
+    function filterOrders() {
+      const filter = document.getElementById('filter-status').value;
+      alert('Filter functionality will be available after backend integration. Filtering by: ' + (filter || 'All'));
+    }
+  </script>
+</body>
+</html>

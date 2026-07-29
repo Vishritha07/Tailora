@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Tailora</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>✂️ <span>Tailora</span></h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item active">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item">
+            <span class="icon">👗</span>
+            <span>Products</span>
+          </a>
+          <a href="fabrics.html" class="nav-item">
+            <span class="icon">🧵</span>
+            <span>Fabrics</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Orders</div>
+          <a href="orders.html" class="nav-item">
+            <span class="icon">📦</span>
+            <span>All Orders</span>
+          </a>
+          <a href="status.html" class="nav-item">
+            <span class="icon">🔄</span>
+            <span>Order Status</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="main-content" style="padding: 1.5rem;">
+    <div class="top-header">
+        <div class="page-title">
+          <h1>Dashboard</h1>
+          <p>Welcome back! Here's an overview of your shop</p>
+        </div>
+        <div class="header-actions">
+          <a href="../user/index.html" class="btn btn-outline" target="_blank">View Store →</a>
+        </div>
+      </div>
+  <!-- TOP STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">📦</div>
+      <div class="stat-info">
+        <h3>24</h3>
+        <p>Total Orders</p>
+    </div>
+      
+    
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">✅</div>
+        <div class="stat-info">
+         <h3>18</h3>
+         <p>Completed</p>
+        </div>
+    </div>
+    <div class="stat-card">
+    <div class="stat-icon purple">⏳</div>
+      <div class="stat-info">
+        <h3>6</h3>
+        <p>Pending</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW 3 OPTIONS SECTION -->
+<div class="grid-2">
+
+  <!-- OPTION 1: PRODUCTS & FABRICS -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Manage Items</h3>
+    </div>
+    <div class="card-body">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; height: 150px;">
+        <a href="products.html" class="btn btn-primary" style="flex: 3;">
+          👗 Products
+        </a>
+        <a href="fabrics.html" class="btn btn-secondary" style="flex: 1;">
+          🧵 Fabrics
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION 2: READYMADE & CUSTOM -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Orders</h3>
+    </div>
+    <div class="card-body">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; height: 150px;">
+        <a href="orders.html?type=readymade" class="btn btn-primary" style="flex: 3;">
+          📦 Readymade
+        </a>
+        <a href="orders.html?type=custom" class="btn btn-outline" style="flex: 1;">
+          ✂️ Customize
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- OPTION 3 FULL WIDTH -->
+<div class="card" style="margin-top: 1.5rem;">
+  <div class="card-header">
+    <h3>Online Tailoring</h3>
+  </div>
+  <div class="card-body">
+    <a href="studio.html" class="btn btn-primary btn-block">
+  Open Tailoring Panel
+</a>
+  </div>
+</div>
+
+  <div class="card" style="margin-top: 1.5rem;">
+  <div class="card-header">
+    <h3>Recent Orders</h3>
+    <a href="orders.html" class="btn btn-sm btn-outline">View All</a>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <!-- your table stays same -->
+  </div>
+</div>
+
+</main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

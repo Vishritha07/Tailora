@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Management - Tailora Admin</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>✂️ <span>Tailora</span></h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item">
+            <span class="icon">👗</span>
+            <span>Products</span>
+          </a>
+          <a href="fabrics.html" class="nav-item">
+            <span class="icon">🧵</span>
+            <span>Fabrics</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Orders</div>
+          <a href="orders.html" class="nav-item active">
+            <span class="icon">📦</span>
+            <span>All Orders</span>
+          </a>
+          <a href="status.html" class="nav-item">
+            <span class="icon">🔄</span>
+            <span>Order Status</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="top-header">
+        <div class="page-title">
+          <h1>Order Management</h1>
+          <p>View and manage all customer orders</p>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('ready-made')">Ready-Made & Customized</div>
+      </div>
+      <tbody id="ordersTableBody"></tbody>
+
+      <!-- Ready-Made & Customized Orders Tab -->
+      <div id="ready-made-tab" class="tab-content">
+        <div class="card">
+          <div class="card-header">
+            <h3>Ready-Made & Customization Orders</h3>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <select style="padding: 0.5rem 1rem; border: 2px solid var(--border); border-radius: 8px;">
+                <option value="">All Status</option>
+                <option value="placed">Placed</option>
+                <option value="accepted">Accepted</option>
+                <option value="stitching">Stitching</option>
+                <option value="completed">Completed</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersTable">
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Detail Panel -->
+        <div id="order-detail" class="card" style="margin-top: 1.5rem; display: none;">
+          <div class="card-header">
+            <h3>Order Details - #TS-2026-001</h3>
+            <button class="btn btn-sm btn-outline" onclick="closeOrderDetail()">Close</button>
+          </div>
+          <div class="card-body">
+            <div class="order-detail-panel">
+              <div class="detail-section">
+                <h4>Customer Information</h4>
+                <div class="detail-row">
+                  <span class="detail-label">Name</span>
+                  <span class="detail-value">Sarah Johnson</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Email</span>
+                  <span class="detail-value">sarah@email.com</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Phone</span>
+                  <span class="detail-value">+1 234 567 890</span>
+                </div>
+              </div>
+              <div class="detail-section">
+                <h4>Order Information</h4>
+                <div class="detail-row">
+                  <span class="detail-label">Product</span>
+                <span class="detail-value" id="detailProduct"></span>                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Type</span>
+                  <span class="detail-value" id="detailType"></span>
+                <div class="detail-row">
+                  <span class="detail-label">Price</span>
+                  <span class="detail-value"></span>
+                </div>
+              </div>
+              <div class="detail-section">
+                <h4>Measurements</h4>
+                <div class="detail-row">
+                  <span class="detail-label">Bust</span>
+                  <span class="detail-value" id="detailBust"></span>
+                <div class="detail-row">
+                  <span class="detail-label">Waist</span>
+                  <span class="detail-value">28 inches</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Hips</span>
+                  <span class="detail-value">38 inches</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Shoulder</span>
+                  <span class="detail-value">15 inches</span>
+                </div>
+              </div>
+              <div class="detail-section">
+                <h4>Fabric Selection</h4>
+                <div class="detail-row">
+                  <span class="detail-label">Fabric Type</span>
+                  <span class="detail-value">Cotton Silk</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Style</span>
+                  <span class="detail-value">Plain</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Color</span>
+                  <span class="detail-value">Navy Blue</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-section" style="margin-top: 1rem;">
+              <h4>Customization Notes</h4>
+              <p style="margin-top: 0.5rem; color: var(--text-secondary);">
+                Sweetheart neckline with cap sleeves. Subtle embroidery along hemline. 
+                Floor-length with slight train. Fitted bodice flaring from waist.
+              </p>
+            </div>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+              <a href="status.html" class="btn btn-primary">Update Status</a>
+              <button class="btn btn-secondary">Print Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    </main>
+  </div>
+
+  
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      document.getElementById(tab + '-tab').style.display = 'block';
+    }
+
+    function viewOrder(id) {
+      document.getElementById('order-detail').style.display = 'block';
+      document.getElementById('order-detail').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeOrderDetail() {
+      document.getElementById('order-detail').style.display = 'none';
+    }
+
+    function selectTailoringOrder(id) {
+      document.querySelectorAll('.order-list-item').forEach(item => item.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      // In a real app, this would load the selected order details
+    }
+  </script>
+  <script type="module" src="admin-orders.js"></script>
+</body>
+</html>

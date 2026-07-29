@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customize Product - Tailora</title>
+  <link rel="stylesheet" href="styles(2).css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">✂️ Tailora</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tailoring.html">Online Tailoring</a></li>
+      <li><a href="orders(2).html">My Orders</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="page-header">
+      <h1>Customize Your Product</h1>
+      <p>Personalize this ready-made design with your measurements and fabric preferences</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step active" id="step1-indicator">
+        <span class="step-number">1</span>
+        <span>Measurements</span>
+      </div>
+      <div class="step" id="step2-indicator">
+        <span class="step-number">2</span>
+        <span>Fabric Selection</span>
+      </div>
+      <div class="step" id="step3-indicator">
+        <span class="step-number">3</span>
+        <span>Review & Order</span>
+      </div>
+    </div>
+
+    <!-- Selected Product Preview -->
+    <div class="section" style="margin-bottom: 2rem;">
+      <h3 style="margin-bottom: 1rem;">Selected Product</h3>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <img
+  id="selected-product-image"
+  style="
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:12px;
+    flex-shrink:0;
+  "
+>
+
+<div>
+  <h4 id="selected-product-name">
+    Product Name
+  </h4>
+
+  <p style="color: var(--text-secondary);">
+    You are customizing this ready-made design
+  </p>
+</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Body Measurements -->
+    <div class="section" id="step1">
+      <h2>Step 1: Body Measurements</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Enter your body measurements for a perfect fit. All fields are optional.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="bust">Bust (inches)</label>
+          <input type="number" id="bust" placeholder="Enter bust measurement">
+          <span class="helper-text">Measure around the fullest part of your bust</span>
+        </div>
+        <div class="form-group">
+          <label for="waist">Waist (inches)</label>
+          <input type="number" id="waist" placeholder="Enter waist measurement">
+          <span class="helper-text">Measure around your natural waistline</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="hips">Hips (inches)</label>
+          <input type="number" id="hips" placeholder="Enter hip measurement">
+          <span class="helper-text">Measure around the fullest part of your hips</span>
+        </div>
+        <div class="form-group">
+          <label for="shoulder">Shoulder Width (inches)</label>
+          <input type="number" id="shoulder" placeholder="Enter shoulder width">
+          <span class="helper-text">Measure from shoulder point to shoulder point</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="arm-length">Arm Length (inches)</label>
+          <input type="number" id="arm-length" placeholder="Enter arm length">
+          <span class="helper-text">Measure from shoulder to wrist</span>
+        </div>
+        <div class="form-group">
+          <label for="dress-length">Dress Length (inches)</label>
+          <input type="number" id="dress-length" placeholder="Enter desired dress length">
+          <span class="helper-text">Measure from shoulder to desired hem</span>
+        </div>
+      </div>
+
+      <!-- Measurement Guide -->
+      <div class="measurement-guide">
+        <h4>📏 Measurement Guide</h4>
+        <img src="https://i.etsystatic.com/22699046/r/il/b8ad6b/4884907392/il_570xN.4884907392_ca72.jpg" 
+       alt="Body Measurement Guide"
+       style="width: 100%; max-width: 500px; border-radius: 10px;">
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+          Use a flexible measuring tape. Stand straight and relaxed while measuring. 
+          If you're unsure, have someone help you take the measurements.
+        </p>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: right;">
+        <button class="btn btn-primary" onclick="goToStep(2)">Next: Fabric Selection →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Fabric Selection -->
+    <div class="section" id="step2" style="display: none;">
+      <h2>Step 2: Fabric Selection</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Choose your preferred fabric type, style, and color.
+      </p>
+
+      <!-- Fabric Types -->
+      <h4 style="margin-bottom: 1rem;">Select Fabric Type</h4>
+      <div class="fabric-types" id="fabric-types"></div>
+
+     
+
+      <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+        <button class="btn btn-outline" onclick="goToStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(3)">Next: Review Order →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Review & Order -->
+    <div class="section" id="step3" style="display: none;">
+      <h2>Step 3: Review & Proceed</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Review your customization details before proceeding with the order.
+      </p>
+
+      <div class="order-detail-grid">
+        <div class="order-detail-section">
+          <h3>Your Measurements</h3>
+          <div class="detail-row">
+            <span class="detail-label">Bust</span>
+            <span class="detail-value" id="review-bust">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Waist</span>
+            <span class="detail-value" id="review-waist">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Hips</span>
+            <span class="detail-value" id="review-hips">Not provided</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Shoulder Width</span>
+            <span class="detail-value" id="review-shoulder">Not provided</span>
+          </div>
+        </div>
+
+        <div class="order-detail-section">
+          <h3>Fabric Selection</h3>
+          <div class="detail-row">
+            <span class="detail-label">Fabric Type</span>
+            <span class="detail-value" id="review-fabric">Not selected</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Style</span>
+            <span class="detail-value" id="review-style">Not selected</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Color</span>
+            <span class="detail-value" id="review-color">Not selected</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Product</span>
+            <span class="detail-value">Elegant Evening Gown</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+        <button class="btn btn-outline" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-accent" id="customOrderBtn">Proceed with Order</button>
+      </div>
+    </div>
+  </main>
+  <script>
+window.addEventListener("DOMContentLoaded", () => {
+
+  const savedImage = localStorage.getItem("selectedProductImage");
+  const savedName = localStorage.getItem("selectedProductName");
+
+  if (savedImage) {
+    document.getElementById("selected-product-image").src = savedImage;
+  }
+
+  if (savedName) {
+    document.getElementById("selected-product-name").innerText = savedName;
+  }
+
+});
+
+let selectedFabric = "";
+let selectedStyle = "";
+let selectedColor = "";
+
+function goToStep(step) {
+
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("step3").style.display = "none";
+
+  document.getElementById("step1-indicator").classList.remove("active", "completed");
+  document.getElementById("step2-indicator").classList.remove("active", "completed");
+  document.getElementById("step3-indicator").classList.remove("active", "completed");
+
+  document.getElementById("step" + step).style.display = "block";
+  document.getElementById("step" + step + "-indicator").classList.add("active");
+
+  for (let i = 1; i < step; i++) {
+    document.getElementById("step" + i + "-indicator").classList.add("completed");
+  }
+
+  if (step === 3) {
+    updateReview();
+  }
+}
+
+function selectFabricType(btn, type, design, color) {
+
+  document.querySelectorAll(".fabric-type-btn")
+    .forEach(b => b.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  selectedFabric = type;
+  selectedStyle = design;
+  selectedColor = color;
+
+  document.getElementById("fabric-style-section").style.display = "block";
+  document.getElementById("color-section").style.display = "block";
+
+  document.getElementById("fabric-style-options").innerHTML =
+    `<p>${design}</p>`;
+
+  document.getElementById("color-options").innerHTML =
+    `<p>${color}</p>`;
+}
+
+function updateReview() {
+
+  document.getElementById("review-bust").textContent =
+    document.getElementById("bust").value || "Not provided";
+
+  document.getElementById("review-waist").textContent =
+    document.getElementById("waist").value || "Not provided";
+
+  document.getElementById("review-hips").textContent =
+    document.getElementById("hips").value || "Not provided";
+
+  document.getElementById("review-shoulder").textContent =
+    document.getElementById("shoulder").value || "Not provided";
+
+  document.getElementById("review-fabric").textContent =
+    selectedFabric || "Not selected";
+
+  document.getElementById("review-style").textContent =
+    selectedStyle || "Not selected";
+
+  document.getElementById("review-color").textContent =
+    selectedColor || "Not selected";
+}
+</script>
+
+<script type="module" src="customization.js"></script>
+<script type="module" src="load-fabric.js"></script>
+
+</body>
+</html>
+ </body>
+</html>
+

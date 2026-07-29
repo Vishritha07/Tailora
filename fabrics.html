@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fabric Management - Tailora Admin</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>✂️ <span>Tailora</span></h2>
+        <p>Admin Panel</p>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span class="icon">📊</span>
+            <span>Dashboard</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item">
+            <span class="icon">👗</span>
+            <span>Products</span>
+          </a>
+          <a href="fabrics.html" class="nav-item active">
+            <span class="icon">🧵</span>
+            <span>Fabrics</span>
+          </a>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Orders</div>
+          <a href="orders.html" class="nav-item">
+            <span class="icon">📦</span>
+            <span>All Orders</span>
+          </a>
+          <a href="status.html" class="nav-item">
+            <span class="icon">🔄</span>
+            <span>Order Status</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="top-header">
+        <div class="page-title">
+          <h1>Fabric Management</h1>
+          <p>Manage fabric types, colors, and designs for customization</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="openModal('add-fabric-modal')">+ Add New Fabric</button>
+        </div>
+      </div>
+
+    
+
+  <!-- Fabrics Table -->
+<div class="card">
+  <div class="card-header">
+    <h3>All Fabrics</h3>
+  </div>
+
+  <div class="card-body" style="padding: 0;">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Fabric Name</th>
+            <th>Type</th>
+            <th>Design</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="fabricsTableBody">
+
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+  <!-- Add Fabric Modal -->
+  <div class="modal-overlay" id="add-fabric-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Add New Fabric</h3>
+        <button class="modal-close" onclick="closeModal('add-fabric-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Fabric Image</label>
+          <input
+            type="text"
+            id="fabric-image"
+            placeholder="Paste fabric image URL">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fabric-type">Type</label>
+            <select id="fabric-type">
+              <option value="">Select type</option>
+              <option value="cotton">Cotton</option>
+              <option value="silk">Silk</option>
+              <option value="linen">Linen</option>
+              <option value="chiffon">Chiffon</option>
+              <option value="velvet">Velvet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fabric-design">Design</label>
+            <select id="fabric-design">
+              <option value="">Select design</option>
+              <option value="plain">Plain</option>
+              <option value="floral">Floral</option>
+              <option value="striped">Striped</option>
+              <option value="checkered">Checkered</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fabric-color">Color</label>
+          <select id="fabric-color">
+            <option value="">Select color</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="navy">Navy Blue</option>
+            <option value="maroon">Maroon</option>
+            <option value="green">Olive Green</option>
+          </select>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('add-fabric-modal')">Cancel</button>
+        <button class="btn btn-primary" id="saveFabricBtn">Save Fabric</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+  <script>
+    function switchTab(tab) {
+      // Update tab buttons
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Update tab content
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      document.getElementById(tab + '-tab').style.display = 'block';
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    window.closeModal = closeModal;
+
+  </script>
+  <script type="module" src="fabric.js"></script>
+</body>
+</html>
