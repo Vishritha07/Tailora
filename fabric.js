@@ -4,9 +4,13 @@ import { db } from "./firebase.js";
 import {
   collection,
   addDoc,
-  getDocs
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+let editingId = null;
 
 async function loadFabrics() {
 
@@ -35,8 +39,13 @@ async function loadFabrics() {
         <td>${fabric.design || "-"}</td>
 
         <td>
-          <button class="btn btn-sm btn-outline">Edit</button>
-          <button class="btn btn-sm btn-danger">Delete</button>
+          
+
+          <button
+            class="btn btn-sm btn-danger"
+            onclick="deleteFabric('${doc.id}')">
+            Delete
+          </button>
         </td>
       </tr>
     `;
@@ -61,10 +70,10 @@ if (saveButton) {
       };
 
       // Save to Firebase
-      await addDoc(
-        collection(db, "fabrics"),
-        fabric
-      );
+     await addDoc(
+       collection(db, "fabrics"),
+       fabric
+     );
 
       alert("Fabric added successfully!");
 
@@ -88,3 +97,12 @@ if (saveButton) {
 
 // Load existing fabrics when page opens
 loadFabrics();
+window.deleteFabric = async function(id) {
+
+  if (!confirm("Delete this fabric?")) return;
+
+  await deleteDoc(doc(db, "fabrics", id));
+
+  loadFabrics();
+};
+

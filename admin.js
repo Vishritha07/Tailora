@@ -119,9 +119,7 @@ async function loadProducts() {
 
         <td>
 
-          <button class="btn btn-sm btn-outline">
-            Edit
-          </button>
+          
 
           <button class="btn btn-sm btn-danger" onclick="deleteProduct('${doc.id}')">
             Delete
