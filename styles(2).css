@@ -107,6 +107,14 @@ body {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.product-card img {
+  width: 100%;
+  height: 350px;      /* Increase or decrease as you like */
+  object-fit: contain; /* Shows the complete image */
+  display: block;
+  background: #fff;
+}
+
 .product-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);

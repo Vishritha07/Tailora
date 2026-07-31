@@ -27,12 +27,7 @@ async function loadUserProducts() {
 
       <div class="product-card">
 
-        <img src="${product.image}"
-             style="
-               width: 100%;
-               height: 250px;
-               object-fit: cover;
-             ">
+        <img src="${product.image}" alt="${product.name}">
 
         <div class="product-info">
 
