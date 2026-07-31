@@ -112,7 +112,9 @@
           <span class="helper-text">Measure from shoulder to desired hem</span>
         </div>
       </div>
-
+      <div style="margin-top: 2rem; text-align: right;">
+        <button class="btn btn-primary" onclick="goToStep(2)">Next: Fabric Selection →</button>
+      </div>
       <!-- Measurement Guide -->
       <div class="measurement-guide">
         <h4>📏 Measurement Guide</h4>
@@ -125,9 +127,7 @@
         </p>
       </div>
 
-      <div style="margin-top: 2rem; text-align: right;">
-        <button class="btn btn-primary" onclick="goToStep(2)">Next: Fabric Selection →</button>
-      </div>
+      
     </div>
 
     <!-- Step 2: Fabric Selection -->
@@ -248,7 +248,8 @@ function goToStep(step) {
 
 function selectFabricType(btn, type, design, color) {
 
-  document.querySelectorAll(".fabric-type-btn")
+  document
+    .querySelectorAll(".fabric-type-btn")
     .forEach(b => b.classList.remove("active"));
 
   btn.classList.add("active");
@@ -258,13 +259,15 @@ function selectFabricType(btn, type, design, color) {
   selectedColor = color;
 
   document.getElementById("fabric-style-section").style.display = "block";
-  document.getElementById("color-section").style.display = "block";
 
   document.getElementById("fabric-style-options").innerHTML =
     `<p>${design}</p>`;
 
+  document.getElementById("color-section").style.display = "block";
+
   document.getElementById("color-options").innerHTML =
     `<p>${color}</p>`;
+    updateReview();
 }
 
 function updateReview() {

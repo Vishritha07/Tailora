@@ -52,9 +52,11 @@ async function loadUserProducts() {
             </a>
 
             <a href="customization.html"
-               class="btn btn-secondary btn-sm">
-               Customization
-            </a>
+   class="btn btn-secondary btn-sm customize-btn"
+   data-image="${product.image}"
+   data-name="${product.name}">
+   Customization
+</a>
 
           </div>
 
@@ -71,3 +73,20 @@ async function loadUserProducts() {
 
 // Load products
 loadUserProducts();
+document.addEventListener("click", (e) => {
+
+  if (e.target.classList.contains("customize-btn")) {
+
+    localStorage.setItem(
+      "selectedProductImage",
+      e.target.dataset.image
+    );
+
+    localStorage.setItem(
+      "selectedProductName",
+      e.target.dataset.name
+    );
+
+  }
+
+});

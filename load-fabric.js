@@ -10,10 +10,7 @@ async function loadFabrics() {
   const fabricContainer =
     document.getElementById("fabric-types");
 
-  if (!fabricContainer) {
-    console.log("fabric-types element not found");
-    return;
-  }
+  if (!fabricContainer) return;
 
   try {
 
@@ -29,16 +26,14 @@ async function loadFabrics() {
       const fabricCard =
         document.createElement("div");
 
-      fabricCard.className =
-        "fabric-type-btn";
+      fabricCard.className = "fabric-type-btn";
 
-      fabricCard.style.cursor =
-        "pointer";
+      fabricCard.style.cursor = "pointer";
 
       fabricCard.innerHTML = `
         <img
-          src="${fabric.image}"
-          alt="${fabric.type}"
+          src="${fabric.image || ""}"
+          alt="${fabric.type || ""}"
           style="
             width:150px;
             height:150px;
@@ -56,26 +51,18 @@ async function loadFabrics() {
 
       fabricCard.addEventListener("click", () => {
 
-        document
-          .querySelectorAll(".fabric-type-btn")
-          .forEach(card =>
-            card.classList.remove("active")
-          );
+  if (typeof window.selectFabricType === "function") {
 
-        fabricCard.classList.add("active");
+    window.selectFabricType(
+      fabricCard,
+      fabric.type || "",
+      fabric.design || "",
+      fabric.color || ""
+    );
 
-        if (typeof window.selectFabricType === "function") {
+  }
 
-          window.selectFabricType(
-            fabricCard,
-            fabric.type || "",
-            fabric.design || "",
-            fabric.color || ""
-          );
-
-        }
-
-      });
+});
 
       fabricContainer.appendChild(fabricCard);
 
@@ -83,10 +70,7 @@ async function loadFabrics() {
 
   } catch (error) {
 
-    console.error(
-      "Error loading fabrics:",
-      error
-    );
+    console.error("Error loading fabrics:", error);
 
   }
 

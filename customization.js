@@ -30,13 +30,13 @@ if (customOrderBtn) {
 
 
       const fabric =
-        document.getElementById("review-fabric").innerText;
+        window.selectedFabric || "Not selected";
 
       const style =
-        document.getElementById("review-style").innerText;
+        window.selectedStyle || "Not selected";
 
       const color =
-        document.getElementById("review-color").innerText;
+        window.selectedColor || "Not selected";
 
 
 

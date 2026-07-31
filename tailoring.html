@@ -104,6 +104,10 @@
         </div>
       </div>
 
+      <div style="margin-top: 2rem; text-align: right;">
+        <button class="btn btn-primary" onclick="goToStep(2)">Next: Fabric Selection →</button>
+      </div>
+
       <!-- Measurement Guide -->
       <div class="measurement-guide">
         <h4>📏 Measurement Guide</h4>
@@ -117,9 +121,7 @@
         </p>
       </div>
 
-      <div style="margin-top: 2rem; text-align: right;">
-        <button class="btn btn-primary" onclick="goToStep(2)">Next: Fabric Selection →</button>
-      </div>
+      
     </div>
 
     <!-- Step 2: Fabric Selection -->
@@ -129,21 +131,11 @@
         Choose your preferred fabric for your custom outfit.
       </p>
 
-<!-- Fabric Types -->
-<h4 style="margin-bottom: 1rem;">Select Fabric Type</h4>
-<div class="fabric-types" id="fabric-types"></div>
+      <!-- Fabric Types -->
+      <h4 style="margin-bottom: 1rem;">Select Fabric Type</h4>
+      <div class="fabric-types" id="fabric-types"></div>
 
-<!-- Fabric Styles -->
-<div id="fabric-style-section" style="display: none; margin-top: 2rem;">
-  <h4>Select Fabric Style</h4>
-  <div id="fabric-style-options"></div>
-</div>
 
-<!-- Colors -->
-<div id="color-section" style="display: none; margin-top: 2rem;">
-  <h4>Select Color</h4>
-  <div id="color-options"></div>
-</div>
       <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
         <button class="btn btn-outline" onclick="goToStep(1)">← Back</button>
         <button class="btn btn-primary" onclick="goToStep(3)">Next: Design Details →</button>
@@ -330,18 +322,39 @@ window.selectFabricType = function(btn, type, design, color) {
 
   btn.classList.add("active");
 
+  // Save selected values
   selectedFabric = type;
   selectedStyle = design;
   selectedColor = color;
 
-  document.getElementById("fabric-style-section").style.display = "block";
-  document.getElementById("color-section").style.display = "block";
+  // Show Fabric Style
+  const styleSection =
+    document.getElementById("fabric-style-section");
 
-  document.getElementById("fabric-style-options").innerHTML =
-    `<p>${design}</p>`;
+  const styleOptions =
+    document.getElementById("fabric-style-options");
 
-  document.getElementById("color-options").innerHTML =
-    `<p>${color}</p>`;
+  styleSection.style.display = "block";
+
+  styleOptions.innerHTML = `
+    <p>${selectedStyle}</p>
+  `;
+
+  // Show Color
+  const colorSection =
+    document.getElementById("color-section");
+
+  const colorOptions =
+    document.getElementById("color-options");
+
+  colorSection.style.display = "block";
+
+  colorOptions.innerHTML = `
+    <p>${selectedColor}</p>
+  `;
+  // ⭐ IMPORTANT
+  updateReview();
+
 };
 
 
