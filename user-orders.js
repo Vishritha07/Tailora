@@ -3,6 +3,8 @@ import { db } from "./firebase.js";
 import {
   collection,
   getDocs
+  doc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -234,3 +236,25 @@ ordersList.innerHTML += `
 
 
 loadOrders();
+
+window.showOrdersList = function () {
+
+  document.getElementById("orders-list-view").style.display = "block";
+
+  document.getElementById("order-detail-view").style.display = "none";
+
+};
+
+window.cancelOrder = async function (collectionName, id) {
+
+  if (!confirm("Cancel this order?")) return;
+
+  await deleteDoc(doc(db, collectionName, id));
+
+  alert("Order cancelled.");
+
+  showOrdersList();
+
+  loadOrders();
+
+};

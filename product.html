@@ -78,77 +78,54 @@
 
 </div>
 
-    <!-- Customer Reviews -->
-    <div class="section">
-      <h2>Customer Reviews</h2>
-      
-      <div class="review-card">
-        <div class="review-header">
-          <span class="reviewer-name">Sarah Johnson</span>
-          <span class="review-date">March 10, 2026</span>
-        </div>
-        <div class="stars">★★★★★</div>
-        <p>Absolutely beautiful dress! The quality exceeded my expectations. 
-           Fit perfectly and received so many compliments at the party.</p>
-      </div>
+<!-- Customer Reviews -->
+<div class="section">
+  <h2>Customer Reviews</h2>
 
-      <div class="review-card">
-        <div class="review-header">
-          <span class="reviewer-name">Priya Sharma</span>
-          <span class="review-date">March 5, 2026</span>
-        </div>
-        <div class="stars">★★★★☆</div>
-        <p>Lovely design and comfortable to wear. Delivery was quick. 
-           Would have given 5 stars but the color was slightly different from the picture.</p>
-      </div>
+  <!-- Reviews will appear here -->
+  <div id="reviewsContainer"></div>
 
-      <div class="review-card">
-        <div class="review-header">
-          <span class="reviewer-name">Emily Chen</span>
-          <span class="review-date">February 28, 2026</span>
-        </div>
-        <div class="stars">★★★★★</div>
-        <p>This is my third purchase from TailorShop and they never disappoint! 
-           The craftsmanship is excellent and customer service is top-notch.</p>
-      </div>
+  <!-- Add Review -->
+  <div style="margin-top: 2rem;">
+    <h4 style="margin-bottom: 1rem;">Write a Review</h4>
+
+    <div class="form-group">
+      <label for="reviewName">Your Name</label>
+      <input
+        type="text"
+        id="reviewName"
+        placeholder="Enter your name"
+      >
     </div>
 
-    <!-- Questions & Answers -->
-    <div class="section">
-      <h2>Questions & Answers</h2>
-      
-      <div class="qa-card">
-        <p><strong>Q: Is this dress suitable for a winter wedding?</strong></p>
-        <p style="color: var(--text-secondary); margin-top: 0.5rem;">
-          A: Yes, this dress can be paired with a shawl or wrap for winter events. 
-          We also offer customization to add sleeves if needed.
-        </p>
-      </div>
-
-      <div class="qa-card">
-        <p><strong>Q: How do I know my correct size?</strong></p>
-        <p style="color: var(--text-secondary); margin-top: 0.5rem;">
-          A: Please refer to our size guide or use the customization option to enter 
-          your exact measurements for a perfect fit.
-        </p>
-      </div>
-
-      <div class="qa-card">
-        <p><strong>Q: Can I request changes to the design?</strong></p>
-        <p style="color: var(--text-secondary); margin-top: 0.5rem;">
-          A: Absolutely! Click on "Customize This" to modify measurements, fabric, 
-          and other details according to your preferences.
-        </p>
-      </div>
-
-      <div style="margin-top: 1.5rem;">
-        <h4 style="margin-bottom: 1rem;">Ask a Question</h4>
-        <div class="form-group">
-          <textarea placeholder="Type your question here..." rows="3"></textarea>
-        </div>
-        <button class="btn btn-secondary">Submit Question</button>
-      </div>
+    <div class="form-group">
+      <label for="reviewRating">Rating</label>
+      <select id="reviewRating">
+        <option value="5">★★★★★ - 5 Stars</option>
+        <option value="4">★★★★☆ - 4 Stars</option>
+        <option value="3">★★★☆☆ - 3 Stars</option>
+        <option value="2">★★☆☆☆ - 2 Stars</option>
+        <option value="1">★☆☆☆☆ - 1 Star</option>
+      </select>
     </div>
+
+    <div class="form-group">
+      <label for="reviewText">Your Review</label>
+      <textarea
+        id="reviewText"
+        placeholder="Write your review here..."
+        rows="4"
+      ></textarea>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      id="submitReviewBtn"
+    >
+      Submit Review
+    </button>
+  </div>
+</div>
   </main>
 
   
