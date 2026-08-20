@@ -4,81 +4,290 @@ import {
   collection,
   getDocs,
   doc,
-  updateDoc
+  getDoc,
+  updateDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const tableBody = document.getElementById("adminOrdersTable");
+const statusFilter = document.getElementById("statusFilter");
 
+let allOrders = [];
+
+
+/* =========================
+   LOAD ALL ORDERS
+========================= */
 
 async function loadAdminOrders() {
-
-  const tableBody =
-    document.getElementById("adminOrdersTable");
-
 
   if (!tableBody) {
     console.log("Table body not found");
     return;
   }
 
+  tableBody.innerHTML = "";
+  allOrders = [];
+
+  try {
+
+    // READY-MADE ORDERS
+    const ordersSnapshot =
+      await getDocs(collection(db, "orders"));
+
+    ordersSnapshot.forEach((orderDoc) => {
+
+      allOrders.push({
+        id: orderDoc.id,
+        collection: "orders",
+        data: orderDoc.data()
+      });
+
+    });
+
+
+    // CUSTOMIZATION ORDERS
+    const customSnapshot =
+      await getDocs(collection(db, "customOrders"));
+
+    customSnapshot.forEach((orderDoc) => {
+
+      allOrders.push({
+        id: orderDoc.id,
+        collection: "customOrders",
+        data: orderDoc.data()
+      });
+
+    });
+
+
+    displayOrders(allOrders);
+
+  } catch (error) {
+
+    console.error("Error loading orders:", error);
+
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="7">
+          Unable to load orders.
+        </td>
+      </tr>
+    `;
+
+  }
+}
+
+
+/* =========================
+   DISPLAY ORDERS
+========================= */
+
+function displayOrders(orders) {
 
   tableBody.innerHTML = "";
 
+  if (orders.length === 0) {
 
-  const querySnapshot =
-    await getDocs(collection(db, "orders"));
-  
-  const customSnapshot =
-  await getDocs(collection(db, "customOrders"));
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center;">
+          No orders found.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
 
 
-  querySnapshot.forEach((orderDoc) => {
+  orders.forEach((item) => {
 
-    const order = orderDoc.data();
-
+    const order = item.data;
 
     const row = document.createElement("tr");
 
 
+    /* NAME */
+
+    const orderName =
+      order.name ||
+      (item.collection === "customOrders"
+        ? "Custom Tailoring"
+        : "Unnamed Product");
+
+
+    /* TYPE */
+
+    const orderType =
+      order.type ||
+      (item.collection === "customOrders"
+        ? "Customization"
+        : "Ready-Made");
+
+
+    /* IMAGE */
+
+    const image =
+      order.referenceImage ||
+      order.image ||
+      "";
+
+
+    const imageHTML = image
+
+      ? `
+        <img
+          src="${image}"
+          alt="Order"
+          style="
+            width:60px;
+            height:60px;
+            object-fit:cover;
+            border-radius:8px;
+          "
+        >
+      `
+
+      : `
+        <div
+          style="
+            width:60px;
+            height:60px;
+            border-radius:8px;
+            background:#f1f1f1;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:12px;
+          "
+        >
+          No Image
+        </div>
+      `;
+
+
+    /* DATE */
+
+    let orderDate = "N/A";
+
+    if (order.createdAt) {
+
+      try {
+
+        if (order.createdAt.toDate) {
+          orderDate =
+            order.createdAt.toDate().toLocaleDateString();
+        } else {
+          orderDate =
+            new Date(order.createdAt).toLocaleDateString();
+        }
+
+      } catch {
+        orderDate = "N/A";
+      }
+
+    }
+
+
+    /* STATUS */
+
+    const currentStatus =
+      order.status || "Pending";
+
+
     row.innerHTML = `
 
-      <td>${orderDoc.id.slice(0,6)}</td>
+      <!-- ORDER IMAGE -->
 
-      <td>Customer</td>
+      <td>
+        ${imageHTML}
+      </td>
 
-      <td>${order.name}</td>
 
-      <td>${order.type || "Ready-Made"}</td>
+      <!-- NAME -->
+
+      <td>
+        ${orderName}
+      </td>
+
+
+      <!-- TYPE -->
+
+      <td>
+        ${orderType}
+      </td>
+
+
+      <!-- STATUS -->
 
       <td>
 
-        <select class="statusDropdown">
+        <select
+          class="statusDropdown"
+          data-id="${item.id}"
+          data-collection="${item.collection}"
+        >
 
           <option value="Pending"
-            ${order.status === "Pending" ? "selected" : ""}>
+            ${currentStatus === "Pending" ? "selected" : ""}>
             Pending
           </option>
 
-          <option value="In Progress"
-            ${order.status === "In Progress" ? "selected" : ""}>
-            In Progress
+          <option value="Accepted"
+            ${currentStatus === "Accepted" ? "selected" : ""}>
+            Accepted
+          </option>
+
+          <option value="Stitching"
+            ${currentStatus === "Stitching" ? "selected" : ""}>
+            Stitching
           </option>
 
           <option value="Completed"
-            ${order.status === "Completed" ? "selected" : ""}>
+            ${currentStatus === "Completed" ? "selected" : ""}>
             Completed
+          </option>
+
+          <option value="Shipped"
+            ${currentStatus === "Shipped" ? "selected" : ""}>
+            Shipped
+          </option>
+
+          <option value="Delivered"
+            ${currentStatus === "Delivered" ? "selected" : ""}>
+            Delivered
           </option>
 
         </select>
 
       </td>
 
-      <td>Today</td>
+
+      <!-- ORDER ID -->
+
+      <td>
+        ${item.id.slice(0, 8)}
+      </td>
+
+
+      <!-- DATE -->
+
+      <td>
+        ${orderDate}
+      </td>
+
+
+      <!-- DELETE -->
 
       <td>
 
-        <button class="btn btn-sm btn-outline"
-  onclick="viewOrder('${orderDoc.id}')">
-          View
+        <button
+          class="btn btn-sm btn-outline delete-order-btn"
+          data-id="${item.id}"
+          data-collection="${item.collection}"
+        >
+          Delete
         </button>
 
       </td>
@@ -86,24 +295,103 @@ async function loadAdminOrders() {
     `;
 
 
+    /* STATUS CHANGE */
+
     const dropdown =
       row.querySelector(".statusDropdown");
 
 
-    dropdown.addEventListener("change", async (e) => {
+    dropdown.addEventListener("change", async (event) => {
 
-      const newStatus = e.target.value;
+      const newStatus =
+        event.target.value;
+
+      try {
+
+        await updateDoc(
+          doc(
+            db,
+            item.collection,
+            item.id
+          ),
+          {
+            status: newStatus
+          }
+        );
+
+        // Update local data too
+        item.data.status = newStatus;
+
+        alert("Order status updated successfully.");
+
+      } catch (error) {
+
+        console.error(
+          "Status update error:",
+          error
+        );
+
+        alert("Failed to update order status.");
+
+      }
+
+    });
 
 
-      await updateDoc(
-        doc(db, "orders", orderDoc.id),
-        {
-          status: newStatus
-        }
-      );
+    /* DELETE */
+
+    const deleteButton =
+      row.querySelector(".delete-order-btn");
 
 
-      alert("Status Updated");
+    deleteButton.addEventListener("click", async () => {
+
+      const confirmDelete =
+        confirm(
+          "Are you sure you want to delete this order?"
+        );
+
+
+      if (!confirmDelete) return;
+
+
+      try {
+
+        await deleteDoc(
+          doc(
+            db,
+            item.collection,
+            item.id
+          )
+        );
+
+
+        // Remove from local array
+        allOrders =
+          allOrders.filter(
+            order =>
+              !(
+                order.id === item.id &&
+                order.collection === item.collection
+              )
+          );
+
+
+        displayOrders(allOrders);
+
+
+        alert("Order deleted successfully.");
+
+      } catch (error) {
+
+        console.error(
+          "Delete error:",
+          error
+        );
+
+        alert("Failed to delete order.");
+
+      }
 
     });
 
@@ -112,133 +400,180 @@ async function loadAdminOrders() {
 
   });
 
-  customSnapshot.forEach((orderDoc) => {
+}
 
-  const order = orderDoc.data();
 
-  const row = document.createElement("tr");
+/* =========================
+   STATUS FILTER
+========================= */
 
-  row.innerHTML = `
+if (statusFilter) {
 
-    <td>${orderDoc.id.slice(0,6)}</td>
+  statusFilter.addEventListener(
+    "change",
+    () => {
 
-    <td>Customer</td>
+      const selectedStatus =
+        statusFilter.value;
 
-    <td>Customized Dress</td>
 
-    <td>Customized</td>
+      if (!selectedStatus) {
 
-    <td>
+        displayOrders(allOrders);
 
-      <select class="statusDropdown">
+        return;
 
-        <option value="Pending"
-          ${order.status === "Pending" ? "selected" : ""}>
-          Pending
-        </option>
-
-        <option value="In Progress"
-          ${order.status === "In Progress" ? "selected" : ""}>
-          In Progress
-        </option>
-
-        <option value="Completed"
-          ${order.status === "Completed" ? "selected" : ""}>
-          Completed
-        </option>
-
-      </select>
-
-    </td>
-
-    <td>Today</td>
-
-    <td>
-
-      <button class="btn btn-sm btn-outline">
-        View
-      </button>
-
-    </td>
-
-  `;
-
-  const dropdown =
-    row.querySelector(".statusDropdown");
-
-  dropdown.addEventListener("change", async (e) => {
-
-    const newStatus = e.target.value;
-
-    await updateDoc(
-      doc(db, "customOrders", orderDoc.id),
-      {
-        status: newStatus
       }
-    );
 
-    alert("Status Updated");
 
-  });
+      const filteredOrders =
+        allOrders.filter(
+          item =>
+            (item.data.status || "Pending") ===
+            selectedStatus
+        );
 
-  tableBody.appendChild(row);
 
-});
+      displayOrders(filteredOrders);
+
+    }
+  );
 
 }
 
 
-loadAdminOrders();
+/* =========================
+   VIEW ORDER
+========================= */
 
-window.viewOrder = async function(orderId) {
+window.viewOrder = async function (
+  orderId,
+  collectionName = "orders"
+) {
 
-  const orderRef =
-    doc(db, "orders", orderId);
+  try {
 
-  const orderSnap =
-    await getDoc(orderRef);
-
-  const order =
-    orderSnap.data();
-
-
-  document.getElementById("order-detail")
-    .style.display = "block";
-
-
-  document.getElementById("detailProduct")
-    .textContent = order.name || "";
-
-  document.getElementById("detailType")
-    .textContent = order.type || "";
-
-  document.getElementById("detailBust")
-    .textContent = order.bust || "";
-
-  document.getElementById("detailWaist")
-    .textContent = order.waist || "";
-
-  document.getElementById("detailHips")
-    .textContent = order.hips || "";
-
-  document.getElementById("detailShoulder")
-    .textContent = order.shoulder || "";
-
-  document.getElementById("detailFabric")
-    .textContent = order.fabric || "";
-
-  document.getElementById("detailStyle")
-    .textContent = order.style || "";
-
-  document.getElementById("detailColor")
-    .textContent = order.color || "";
+    const orderRef =
+      doc(
+        db,
+        collectionName,
+        orderId
+      );
 
 
-  if(order.referenceImage){
+    const orderSnap =
+      await getDoc(orderRef);
 
-    document.getElementById("detailImage")
-      .src = order.referenceImage;
+
+    if (!orderSnap.exists()) {
+
+      alert("Order not found.");
+
+      return;
+
+    }
+
+
+    const order =
+      orderSnap.data();
+
+
+    const detailPanel =
+      document.getElementById("order-detail");
+
+
+    if (detailPanel) {
+
+      detailPanel.style.display =
+        "block";
+
+      detailPanel.scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+
+
+    const detailProduct =
+      document.getElementById("detailProduct");
+
+
+    if (detailProduct) {
+
+      detailProduct.textContent =
+        order.name ||
+        (collectionName === "customOrders"
+          ? "Custom Tailoring"
+          : "");
+
+    }
+
+
+    const detailType =
+      document.getElementById("detailType");
+
+
+    if (detailType) {
+
+      detailType.textContent =
+        order.type ||
+        (collectionName === "customOrders"
+          ? "Customization"
+          : "Ready-Made");
+
+    }
+
+
+    const detailBust =
+      document.getElementById("detailBust");
+
+
+    if (detailBust)
+      detailBust.textContent =
+        order.bust || "";
+
+
+    const detailWaist =
+      document.getElementById("detailWaist");
+
+
+    if (detailWaist)
+      detailWaist.textContent =
+        order.waist || "";
+
+
+    const detailHips =
+      document.getElementById("detailHips");
+
+
+    if (detailHips)
+      detailHips.textContent =
+        order.hips || "";
+
+
+    const detailShoulder =
+      document.getElementById("detailShoulder");
+
+
+    if (detailShoulder)
+      detailShoulder.textContent =
+        order.shoulder || "";
+
+
+  } catch (error) {
+
+    console.error(
+      "Error loading order:",
+      error
+    );
 
   }
 
-}
+};
+
+
+/* =========================
+   START
+========================= */
+
+loadAdminOrders();

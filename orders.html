@@ -39,10 +39,7 @@
             <span class="icon">📦</span>
             <span>All Orders</span>
           </a>
-          <a href="status.html" class="nav-item">
-            <span class="icon">🔄</span>
-            <span>Order Status</span>
-          </a>
+          
         </div>
       </nav>
     </aside>
@@ -67,30 +64,36 @@
         <div class="card">
           <div class="card-header">
             <h3>Ready-Made & Customization Orders</h3>
-            <div style="display: flex; gap: 1rem; align-items: center;">
-              <select style="padding: 0.5rem 1rem; border: 2px solid var(--border); border-radius: 8px;">
-                <option value="">All Status</option>
-                <option value="placed">Placed</option>
-                <option value="accepted">Accepted</option>
-                <option value="stitching">Stitching</option>
-                <option value="completed">Completed</option>
-                <option value="shipped">Shipped</option>
-                <option value="delivered">Delivered</option>
-              </select>
-            </div>
+
+            <select
+              id="statusFilter"
+              style="
+                padding: 0.5rem 1rem;
+                border: 2px solid var(--border);
+                border-radius: 8px;
+              "
+            >
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Stitching">Stitching</option>
+              <option value="Completed">Completed</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+            </select>
           </div>
           <div class="card-body" style="padding: 0;">
             <div class="table-container">
               <table>
                 <thead>
                   <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Product</th>
+                    <th>Order Image</th>
+                    <th>Name</th>
                     <th>Type</th>
                     <th>Status</th>
+                    <th>Order ID</th>
                     <th>Date</th>
-                    <th>Actions</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody id="adminOrdersTable">

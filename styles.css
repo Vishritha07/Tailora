@@ -908,4 +908,54 @@ tr:hover {
   width: 100%;
 }
 
+/* Orders table */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
 
+.table-container table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-container th,
+.table-container td {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+  width: 12%;
+}
+
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+  width: 18%;
+}
+
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+  width: 14%;
+}
+
+.table-container th:nth-child(4),
+.table-container td:nth-child(4) {
+  width: 16%;
+}
+
+.table-container th:nth-child(5),
+.table-container td:nth-child(5) {
+  width: 14%;
+}
+
+.table-container th:nth-child(6),
+.table-container td:nth-child(6) {
+  width: 12%;
+}
+
+.table-container th:nth-child(7),
+.table-container td:nth-child(7) {
+  width: 14%;
+}

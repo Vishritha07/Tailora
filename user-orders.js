@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 
 import {
   collection,
-  getDocs
+  getDocs,
   doc,
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -14,34 +14,38 @@ const ordersList =
 
 async function loadOrders() {
 
+  if (!ordersList) return;
+
   ordersList.innerHTML = "";
 
 
-  // =========================
-  // READYMADE + TAILORING
-  // =========================
+  /* =========================
+     READY-MADE ORDERS
+  ========================= */
 
   const ordersSnapshot =
-    await getDocs(collection(db, "orders"));
+    await getDocs(
+      collection(db, "orders")
+    );
 
 
   ordersSnapshot.forEach((docItem) => {
 
-    const order = docItem.data();
+    const order =
+      docItem.data();
 
-    let imageSection = "";
+
+    const image =
+      order.referenceImage ||
+      order.image ||
+      "";
 
 
-    // TAILORING REFERENCE IMAGE
+    const imageSection = image
 
-    if (
-      order.referenceImage &&
-      order.referenceImage !== ""
-    ) {
-
-      imageSection = `
+      ? `
         <img
-          src="${order.referenceImage}"
+          src="${image}"
           style="
             width:120px;
             height:120px;
@@ -49,212 +53,185 @@ async function loadOrders() {
             border-radius:12px;
           "
         >
-      `;
+      `
 
-    }
-
-
-    // READYMADE PRODUCT IMAGE
-
-    else if (
-      order.image &&
-      order.image !== ""
-    ) {
-
-      imageSection = `
-        <img
-          src="${order.image}"
-          style="
-            width:120px;
-            height:120px;
-            object-fit:cover;
-            border-radius:12px;
-          "
-        >
-      `;
-
-    }
-
-
-    // NO IMAGE
-
-    else {
-
-      imageSection = `
+      : `
         <div class="image-placeholder">
           No Image
         </div>
       `;
 
-    }
 
+    ordersList.innerHTML += `
 
+      <div class="order-card">
 
-    let customImage = "";
+        ${imageSection}
 
-if (order.image && order.image !== "") {
+        <div class="order-info">
 
-  customImage = `
-    <img
-      src="${order.image}"
-      style="
-        width:120px;
-        height:120px;
-        object-fit:cover;
-        border-radius:12px;
-      "
-    >
-  `;
+          <h3>
+            ${order.name || "Product"}
+          </h3>
 
-} else {
+          <p>
+            ${order.type || "Ready-Made"}
+          </p>
 
-  customImage = `
-    <div class="image-placeholder">
-      Custom
-    </div>
-  `;
+          <p>
+            Status:
+            <strong>
+              ${order.status || "Pending"}
+            </strong>
+          </p>
 
-}
+          <p>
+            Fabric:
+            ${order.fabric || "Not Selected"}
+          </p>
 
+        </div>
 
-ordersList.innerHTML += `
+      </div>
 
-  <div class="order-card">
-
-    ${imageSection}
-
-    <div class="order-info">
-
-      <h3>
-        ${order.name || "Customized Dress"}
-      </h3>
-
-      <p>
-        ${order.type || "Customized"}
-      </p>
-
-      <p>
-        Status:
-        <strong>
-          ${order.status || "Pending"}
-        </strong>
-      </p>
-
-      <p>
-        Fabric:
-        ${order.fabric || "Not Selected"}
-      </p>
-
-    </div>
-
-  </div>
-
-`;
+    `;
 
   });
 
 
-
-
-  // =========================
-  // CUSTOMIZATION ORDERS
-  // =========================
+  /* =========================
+     CUSTOMIZATION ORDERS
+  ========================= */
 
   const customSnapshot =
-    await getDocs(collection(db, "customOrders"));
+    await getDocs(
+      collection(db, "customOrders")
+    );
 
 
   customSnapshot.forEach((docItem) => {
 
-  const order = docItem.data();
+    const order =
+      docItem.data();
 
-  let customImage = "";
+
+    const image =
+      order.referenceImage ||
+      order.image ||
+      "";
 
 
-  if (order.image && order.image !== "") {
+    const customImage = image
 
-    customImage = `
-      <img
-        src="${order.image}"
-        style="
-          width:120px;
-          height:120px;
-          object-fit:cover;
-          border-radius:12px;
-        "
-      >
+      ? `
+        <img
+          src="${image}"
+          style="
+            width:120px;
+            height:120px;
+            object-fit:cover;
+            border-radius:12px;
+          "
+        >
+      `
+
+      : `
+        <div class="image-placeholder">
+          Custom
+        </div>
+      `;
+
+
+    ordersList.innerHTML += `
+
+      <div class="order-card">
+
+        ${customImage}
+
+        <div class="order-info">
+
+          <h3>
+            ${order.name || "Custom Tailoring"}
+          </h3>
+
+          <p>
+            ${order.type || "Customization"}
+          </p>
+
+          <p>
+            Status:
+            <strong>
+              ${order.status || "Pending"}
+            </strong>
+          </p>
+
+          <p>
+            Fabric:
+            ${order.fabric || "Not Selected"}
+          </p>
+
+        </div>
+
+      </div>
+
     `;
 
-  } else {
-
-    customImage = `
-      <div class="image-placeholder">
-        Custom
-      </div>
-    `;
-
-  }
-
-
-  ordersList.innerHTML += `
-
-    <div class="order-card">
-
-      ${customImage}
-
-      <div class="order-info">
-
-        <h3>
-          ${order.name || "Customized Dress"}
-        </h3>
-
-        <p>
-          ${order.type || "Customized"}
-        </p>
-
-        <p>
-          Status:
-          <strong>
-            ${order.status || "Pending"}
-          </strong>
-        </p>
-
-        <p>
-          Fabric:
-          ${order.fabric || "Not Selected"}
-        </p>
-
-      </div>
-
-    </div>
-
-  `;
-
-});
+  });
 
 }
 
 
+/* =========================
+   CANCEL ORDER
+========================= */
+
+window.cancelOrder =
+  async function (
+    collectionName,
+    id
+  ) {
+
+    if (
+      !confirm(
+        "Cancel this order?"
+      )
+    ) return;
+
+
+    try {
+
+      await deleteDoc(
+        doc(
+          db,
+          collectionName,
+          id
+        )
+      );
+
+
+      alert(
+        "Order cancelled."
+      );
+
+
+      loadOrders();
+
+
+    } catch (error) {
+
+      console.error(
+        "Cancel order error:",
+        error
+      );
+
+
+      alert(
+        "Failed to cancel order."
+      );
+
+    }
+
+  };
+
+
 loadOrders();
-
-window.showOrdersList = function () {
-
-  document.getElementById("orders-list-view").style.display = "block";
-
-  document.getElementById("order-detail-view").style.display = "none";
-
-};
-
-window.cancelOrder = async function (collectionName, id) {
-
-  if (!confirm("Cancel this order?")) return;
-
-  await deleteDoc(doc(db, collectionName, id));
-
-  alert("Order cancelled.");
-
-  showOrdersList();
-
-  loadOrders();
-
-};
